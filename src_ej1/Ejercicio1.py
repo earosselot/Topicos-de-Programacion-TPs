@@ -55,8 +55,22 @@ def distanciaMinimaDyC(l, algoritmo):
         upSort(l)
     elif algoritmo == "merge":
         mergeSort(l)
+    elif algoritmo == "ordenada":
+        pass #significa que la lista ya está ordenada
     else:
         print("Algoritmo inválido, usar 'up', 'python' ó 'merge'")
+            
+    #divido la lista ordenada
+    sublistas = dividirEnDos(l)
+    
+    #busco recursivamente la distancia minima (INCOMPLETO)
+    if len(l) == 2:
+        return distancia(l[0],l[1])
+    else:
+        return distanciaMinimaDyC(sublistas[0],"ordenada"), distanciaMinimaDyC(sublistas[1],"ordenada")
+    
+    
+    
 
     
 #funciones para implementar upsort.
@@ -83,7 +97,7 @@ def upSort(l): # es el código que Esteban dió en la teórica
     m = 0
     while actual > 0:
         m = maxPos(l, 0, actual)
-        a[m], a[actual] = a[actual], a[m]
+        l[m], l[actual] = l[actual], l[m]
         actual -= 1
 
 
@@ -141,9 +155,12 @@ def mergeSort(l):
 
 
 
+
+
 datos = listaDePuntos('datitos.txt')
+print(datos,"\n")
 print("Lista de Coordenadas \n",datos,"\n")
 print("Distancia minima \n", distanciaMinima(datos), "\n")
-print('mergeSort: ', mergeSort(datos))
+print('mergeSort: ', mergeSort(datos),"\n")
+print(distanciaMinimaDyC(datos, "python"), "\n")
 #print(distancia(a[0], a[1]))
-print(datos)

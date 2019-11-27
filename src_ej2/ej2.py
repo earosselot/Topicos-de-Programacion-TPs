@@ -4,14 +4,13 @@ import imageio
 import numpy as np
 from numba import jit
 import time
-# import visvis as vv
 
 
-@jit(parallel=True)
+# @jit(parallel=True)
 def gray_filter(img):
     """filtro que hace una transformacion de una imagen color a una en escala de grises con ciertos valores"""
 
-    # genero una matriz de 0 del tamaño de la imagen
+    # genero una matriz de 0 del taman-o de la imagen
     x = img.shape[0]
     y = img.shape[1]
     gray = np.zeros((x, y))
@@ -21,11 +20,11 @@ def gray_filter(img):
     return gray
 
 
-@jit(parallel=True)
+# @jit(parallel=True)
 def blur_filter(img):
     """Filtro que recibe una imagen matriz en grises y devuelve una matriz difuminada"""
 
-    # genero una matriz de 0 del tamaño de la imagen
+    # genero una matriz de 0 del taman-o de la imagen
     filas = img.shape[0]
     col = img.shape[1]
     res = np.zeros((filas, col))
@@ -33,10 +32,10 @@ def blur_filter(img):
     # los dos for anidados recorren toda la imagen excepto lo bordes
     for i in range(1, filas - 1):
         for j in range(1, col - 1):
-            # este calculo ganera el valor promedio que requiere el blur
+            # este calculo ganera e l valor promedio que requiere el blur
             res[i, j] = (img[i - 1, j] + img[i + 1, j] + img[i, j - 1] + img[i, j + 1]) / 4
-    img_uint8 = res.astype(np.uint8)
-    imageio.imwrite('out_jit.jpg', img_uint8)
+    # img_uint8 = res.astype(np.uint8)
+    # imageio.imwrite('out_jit.jpg', img_uint8)
     return res
 
 
@@ -55,26 +54,39 @@ def getfilenames(path):
 
     ftype = path.split(".")[-1]
     folder = path.split("*")[0]
-    return[folder+i for i in os.listdir(folder) if ftype in i.split(".")[-1]]
+    data_list = []
+
+    for i in os.listdir(folder):
+        if ftype in i.split(".")[-1]:
+            data_list.append(folder+i)
+    return data_list
 
 
 def main(argumentos):
 
-    arch_entrada = getfilenames(argumentos[0])
-    # arch_entrada = argumentos
+    arch_entrada = sorted(getfilenames(argumentos[0]))
+    threads = str(argumentos[1])
+    veces = int(argumentos[2])
     tiempos = [[], []]
-    print(arch_entrada)
 
-    for image in arch_entrada:
+    # os.environ["NUMBA_NUM_THREADS"] = threads
+    for p in range(veces):
 
-        im = imageio.imread(image)
+        for image in arch_entrada:
 
-        tiempos[0].append((medirTiempos(gray_filter, im)))
+            im = imageio.imread(image)
 
-        gray = gray_filter(im)
-        tiempos[1].append(medirTiempos(blur_filter, gray))
+            tiempos[0].append((medirTiempos(gray_filter, im)))
 
-    print(tiempos)
+            gray = gray_filter(im)
+            tiempos[1].append(medirTiempos(blur_filter, gray))
+
+        with open('resultados.csv', 'a') as file:
+            for i in range(len(arch_entrada)):
+                # guardo en tam_imagen el taman-o de la imagen
+                tam_imagen = arch_entrada[i].split("_")[2].split(".")[0]
+                file.write("%s; %i; %f; %f\n" % (tam_imagen, int(threads), tiempos[0][i], tiempos[1][i]))
+        print('a')
 
 if __name__ == "__main__":
 

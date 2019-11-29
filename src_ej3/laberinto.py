@@ -1,17 +1,35 @@
 # -*- coding: utf-8 -*-
+import ast
 
 class Laberinto(object):
-	def __init__(self, parent=None):
-		self.parent = parent
-   
-	##### interfaz (metodos publicos)
+    def __init__(self, parent=None):
+        self.parent = parent
 
-	####
-	#### COMPLETAR CON LOS METODOS PEDIDOS
-	####
 
-	##### auxiliares (metodos privados)
+    ##### interfaz (metodos publicos)
+    def cargar(self, fn):
+        """"Carga un laberinto a partir de un archivo .lab"""
 
-	def _redibujar(self):
-	    if self.parent is not None:
-	        self.parent.update()
+        with open(fn, 'r') as entrada:
+            laberinto = []      # laberinto a llenar
+            corch1 = '['        # creo unas cadenas para poder rellenar el ppio y el final de los split
+            corch2 = ']'
+            next(entrada)       # saltea la primera linea
+            for linea in entrada:       # recorre la entrada (desde la segunda linea)
+                linea = linea.strip('\n').lstrip('[').rstrip(']')       #recorte del \n y del corchete inicial y final
+                fila = []               # vacia la fila para cada itereacion
+                for casillero in linea.split(']['):     # divide la linea donde abren y cierran corchetes
+                    fila.append(ast.literal_eval(corch1+casillero+corch2)) # ast.lit pasa un str a lista
+                laberinto.append(fila)  # agrego la fila al laberinto
+        return laberinto
+
+
+    ####
+    #### COMPLETAR CON LOS METODOS PEDIDOS
+    ####
+
+    ##### auxiliares (metodos privados)
+
+    def _redibujar(self):
+        if self.parent is not None:
+            self.parent.update()

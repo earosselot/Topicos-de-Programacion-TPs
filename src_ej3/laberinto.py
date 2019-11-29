@@ -2,12 +2,23 @@
 import ast
 
 class Laberinto(object):
+<<<<<<< HEAD
     def __init__(self, parent=None):
         self.parent = parent
 
+    """Vamos de definir funciones para crear un laberinto """
+	
+    #La función init se inicializa siempre que se llama a la clase Laberinto
 
-    ##### interfaz (metodos publicos)
-    def cargar(self, fn):
+	##### interfaz (metodos publicos)
+
+    def cargar(self,fn):
+        "Carga un archivo .txt que representa al laberinto"
+        self.fn = fn
+        with open (fn,"r") as entrada:
+            return entrada
+
+    def cargar1(self, fn):
         """"Carga un laberinto a partir de un archivo .lab"""
 
         with open(fn, 'r') as entrada:
@@ -22,6 +33,22 @@ class Laberinto(object):
                     fila.append(ast.literal_eval(corch1+casillero+corch2)) # ast.lit pasa un str a lista
                 laberinto.append(fila)  # agrego la fila al laberinto
         return laberinto
+
+    def tamano(self):
+        "Devuelve una tupla con la cantidad de filas y columnas"
+    
+    def resetear(self):
+        "limpia el laberinto"
+    
+    def getPosicionRata(self):
+        "devuelve una tupla con las coordenadas de la rata"
+        
+    
+    
+	####
+	#### COMPLETAR CON LOS METODOS PEDIDOS
+
+
 
 
     ####

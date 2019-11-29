@@ -139,8 +139,10 @@ def dividirEnDos(l):
     else:
         sublist1 = l[:int((len(l)/2))] #mitad izquierda
         sublist2 = l[int((len(l)/2)):] #mitad derecha
-        RectaDeCorte = (sublist2[0][0] - sublist1[len(sublist1)-1][0])/2 #coordenada x de corte
-    return sublist1, sublist2, RectaDeCorte
+        
+        Delta = (sublist2[0][0] - sublist1[len(sublist1)-1][0])/2
+        EjeDeCorte = Delta + sublist1[len(sublist1)-1][0]
+    return sublist1, sublist2, EjeDeCorte
 
 
 def merge(l1, l2):
@@ -219,7 +221,7 @@ def paresAtestear(l1,l2,x,dist):
 """
 PRUEBA DE LAS FUNCIONES
 """
-datos = listaDePuntos('datitos.txt')
+datitos = listaDePuntos('datitos.txt')
 #print("Lista de Coordenadas \n",datos,"\n")
 #print("Distancia minima (Fuerza Bruta) \n", distanciaMinima(datos), "\n")
 #print("Ordenamiento por Upsort \n", upSort(datos),"\n")
@@ -239,16 +241,16 @@ def puntosAleatorios(a,b):
     for i in range(a):
         if random.random() < 0.5:
             b = b*(-1)
-            miSet.append((round((random.random()*b),2),round((random.random()*b)),2))
+            miSet.append((round((random.random()*b),2),round((random.random()*b),2)))
         else:
-            miSet.append((round((random.random()*b),2),round((random.random()*b)),2))
+            miSet.append((round((random.random()*b),2),round((random.random()*b),2)))
             
     return miSet
 
-ParesDiez = puntosAleatorios(10,100)
-ParesCien = puntosAleatorios(100,1000)
-ParesMil = puntosAleatorios(1000,10000)
-ParesCincoMil = puntosAleatorios(5000,100000)
+#ParesDiez = puntosAleatorios(10,100)
+#ParesCien = puntosAleatorios(100,1000)
+#ParesMil = puntosAleatorios(1000,10000)
+#ParesCincoMil = puntosAleatorios(5000,100000)
 
 
 def medir_tiempos(fn,*args):
@@ -259,7 +261,8 @@ def medir_tiempos(fn,*args):
     
     return (tf-t0)
   
-
+    
+"""
 TiemposFuerzaBruta = []
 
 TiemposFuerzaBruta.append(medir_tiempos(distanciaMinima,ParesDiez))
@@ -281,7 +284,15 @@ TiemposDyCM.append(medir_tiempos(distanciaMinimaDyC,ParesCincoMil,"merge"))
 print("Dist Min:", distanciaMinima(ParesCien))
 print(TiemposDyCM)
 
+TiemposDyCU = []
 
-  
+TiemposDyCU.append(medir_tiempos(distanciaMinimaDyC,ParesDiez,"up"))
+TiemposDyCU.append(medir_tiempos(distanciaMinimaDyC,ParesCien,"up"))
+TiemposDyCU.append(medir_tiempos(distanciaMinimaDyC,ParesMil,"up"))
+TiemposDyCU.append(medir_tiempos(distanciaMinimaDyC,ParesCincoMil,"up"))
+
+print("Dist Min:", distanciaMinima(ParesCien))
+print(TiemposDyCU)
+"""
 
 

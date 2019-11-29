@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 import ast
 
+
 class Laberinto(object):
-<<<<<<< HEAD
+    """"Vamos de definir funciones para crear un laberinto.
+    La función init se inicializa siempre que se llama a la clase Laberinto """
+
     def __init__(self, parent=None):
         self.parent = parent
 
-    """Vamos de definir funciones para crear un laberinto """
-	
-    #La función init se inicializa siempre que se llama a la clase Laberinto
+    # interfaz (metodos publicos)
 
-	##### interfaz (metodos publicos)
+    def cargar(self, fn):
+        """Carga un archivo .txt que representa al laberinto"""
 
-    def cargar(self,fn):
-        "Carga un archivo .txt que representa al laberinto"
         self.fn = fn
-        with open (fn,"r") as entrada:
+        with open(fn, "r") as entrada:
             return entrada
 
     def cargar1(self, fn):
@@ -27,35 +27,25 @@ class Laberinto(object):
             corch2 = ']'
             next(entrada)       # saltea la primera linea
             for linea in entrada:       # recorre la entrada (desde la segunda linea)
-                linea = linea.strip('\n').lstrip('[').rstrip(']')       #recorte del \n y del corchete inicial y final
+                linea = linea.strip('\n').lstrip('[').rstrip(']')       # recorte del \n y del corchete inicial y final
                 fila = []               # vacia la fila para cada itereacion
                 for casillero in linea.split(']['):     # divide la linea donde abren y cierran corchetes
-                    fila.append(ast.literal_eval(corch1+casillero+corch2)) # ast.lit pasa un str a lista
+                    fila.append(ast.literal_eval(corch1+casillero+corch2))   # ast.lit pasa un str a lista
                 laberinto.append(fila)  # agrego la fila al laberinto
         return laberinto
 
     def tamano(self):
-        "Devuelve una tupla con la cantidad de filas y columnas"
-    
+        """Devuelve una tupla con la cantidad de filas y columnas"""
+
     def resetear(self):
-        "limpia el laberinto"
-    
+        """limpia el laberinto"""
+
     def getPosicionRata(self):
-        "devuelve una tupla con las coordenadas de la rata"
-        
-    
-    
-	####
-	#### COMPLETAR CON LOS METODOS PEDIDOS
+        """devuelve una tupla con las coordenadas de la rata"""
 
+    # COMPLETAR CON LOS METODOS PEDIDOS
 
-
-
-    ####
-    #### COMPLETAR CON LOS METODOS PEDIDOS
-    ####
-
-    ##### auxiliares (metodos privados)
+    # auxiliares (metodos privados)
 
     def _redibujar(self):
         if self.parent is not None:

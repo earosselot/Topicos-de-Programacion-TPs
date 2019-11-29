@@ -9,6 +9,7 @@ def Sort(sub_li, elem):
 
     return (sorted(sub_li, key=lambda x: x[elem]))
 
+
 def get_item(list, item):
     """devuelve una lista con el enesimo elemento de cada lista de una lista (de listas)"""
 
@@ -19,7 +20,6 @@ def get_item(list, item):
 
 
 with open('resultados_final.csv', 'r') as resultados:
-
     # leo los datos del .csv y los guardo en matriz_res
     matriz_res = []
     for linea in resultados:
@@ -40,34 +40,43 @@ with open('resultados_final.csv', 'r') as resultados:
 
     # ciclo que recorre los resultados cortando por cada tamano de imagen
     for i in range(0, len(sort_res), cant_resultados_por_imagen):
-
         # me quedo solo con un tamano de imagen
-        res_por_imagen = sort_res[i:i+cant_resultados_por_imagen]
+        res_por_imagen = sort_res[i:i + cant_resultados_por_imagen]
 
         # aca separo las columnas en listas para despues plotear
         x.append(get_item(res_por_imagen, 1))
-        y_gray.append(get_item(res_por_imagen, 3))
-        y_blur.append(get_item(res_por_imagen, 7))
+        y_gray.append(np.array(get_item(res_por_imagen, 3)) * 1000)
+        y_blur.append(np.array(get_item(res_por_imagen, 7)) * 1000)
         title.append(str(res_por_imagen[0][0]))
+
 
     # arranco el subplot gray
     fig, axs = plt.subplots(2, 4)
     fig.suptitle('Escalabilidad_gray')
-    axs[0, 0].plot(x[0], y_gray[0])
-    axs[0, 0].set_title(title[0])
-    axs[0, 1].plot(x[1], y_gray[1])
-    axs[0, 1].set_title(title[1])
-    axs[0, 2].plot(x[2], y_gray[2])
-    axs[0, 2].set_title(title[2])
-    axs[0, 3].plot(x[3], y_gray[3])
-    axs[0, 3].set_title(title[3])
-    axs[1, 0].plot(x[4], y_gray[4])
-    axs[1, 0].set_title(title[4])
-    axs[1, 1].plot(x[5], y_gray[5])
-    axs[1, 1].set_title(title[5])
-    axs[1, 2].plot(x[6], y_gray[6])
-    axs[1, 2].set_title(title[6])
-    axs[1, 3].plot(x[7], y_gray[7])
-    axs[1, 3].set_title(title[7])
+    fig.text(0.5, 0.04, '# de threads', ha='center')
+    fig.text(0.04, 0.5, 'tiempo (ms)', va='center', rotation='vertical')
 
+
+    # genera los subplots
+    for i in range(axs.shape[0]):
+        for j in range(axs.shape[1]):
+            axs[i, j].plot(x[(4 * i) + j], y_gray[(4 * i) + j])
+            axs[i, j].set_title(title[(4 * i) + j])
+            axs[i, j].set_xticks([2, 4, 6, 8, 10, 12, 14, 16])
+            # plt.xticks([2, 4, 6, 8, 10, 12, 14, 16])
+    plt.show()
+
+    # Figura Blur
+    fig1, axs = plt.subplots(2, 4)
+    fig1.suptitle('Escalabilidad_blur')
+    fig1.text(0.5, 0.04, '# de threads', ha='center')
+    fig1.text(0.04, 0.5, 'tiempo de ejecucion (ms)', va='center', rotation='vertical')
+
+    # genera los subplots
+    for i in range(axs.shape[0]):
+        for j in range(axs.shape[1]):
+            axs[i, j].plot(x[(4 * i) + j], y_blur[(4 * i) + j])
+            axs[i, j].set_title(title[(4 * i) + j])
+            axs[i, j].set_xticks([2, 4, 6, 8, 10, 12, 14, 16])
+            # plt.xticks([2, 4, 6, 8, 10, 12, 14, 16])
     plt.show()

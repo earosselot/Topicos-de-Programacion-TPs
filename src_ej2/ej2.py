@@ -4,7 +4,6 @@ import imageio
 import numpy as np
 # from numba import jit
 import time
-import timeit
 import statistics as st
 
 
@@ -71,16 +70,10 @@ def main(argumentos):
     salida = argumentos[3]
     tiempos = [[], []]
 
-    # os.environ["NUMBA_NUM_THREADS"] = threads
-
     for image in arch_entrada:
         im = imageio.imread(image)
 
         for p in range(veces):
-
-            # t_gray = timeit.timeit(setup = setup, stmt = gray_code, number = 100)
-            # t_blur = timeit.timeit(setup=setup, stmt=blur_code, number=100)
-            # print(t_gray, t_blur)
 
             tiempos[0].append((medirTiempos(gray_filter, im)))
 
@@ -94,12 +87,13 @@ def main(argumentos):
                                                                         min(tiempos[0]), max(tiempos[0]),
                                                                         st.mean(tiempos[1]), st.stdev(tiempos[1]),
                                                                         min(tiempos[1]), max(tiempos[1])))
-        print('a')
 
 
 if __name__ == "__main__":
-    # if len(sys.argv) < 4:
-    #     print("")
-    #     sys.exit(1)
+    if len(sys.argv) != 5:
+        print('''Se necesitan 5 argumentos: \n
+        "path/a/archivos/*.extension" "# de threads" #_de_repeticiones "arch_salida"\n
+        ej: python ej2.py "im/*.jpg" "10" 100 "salida.csv''')
+        sys.exit(1)
 
     main(sys.argv[1:])

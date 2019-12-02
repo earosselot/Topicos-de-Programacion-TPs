@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import ast
+import numpy as np
 
 
 class Laberinto(object):
@@ -8,7 +9,7 @@ class Laberinto(object):
 
     def __init__(self, parent=None):
         self.parent = parent
-
+        # self.laberinto = [] # va aca ?
     # interfaz (metodos publicos)
 
     def cargar(self, fn):
@@ -22,7 +23,7 @@ class Laberinto(object):
         """"Carga un laberinto a partir de un archivo .lab"""
 
         with open(fn, 'r') as entrada:
-            laberinto = []      # laberinto a llenar
+            self.laberinto = []      # laberinto a llenar
             corch1 = '['        # creo unas cadenas para poder rellenar el ppio y el final de los split
             corch2 = ']'
             next(entrada)       # saltea la primera linea
@@ -31,12 +32,17 @@ class Laberinto(object):
                 fila = []               # vacia la fila para cada itereacion
                 for casillero in linea.split(']['):     # divide la linea donde abren y cierran corchetes
                     fila.append(ast.literal_eval(corch1+casillero+corch2))   # ast.lit pasa un str a lista
-                laberinto.append(fila)  # agrego la fila al laberinto
-        return laberinto
+                self.laberinto.append(fila)  # agrego la fila al laberinto
+        self.laberinto = np.array(self.laberinto)
+        return self.laberinto
 
     def tamano(self):
         """Devuelve una tupla con la cantidad de filas y columnas"""
-
+        
+        shape = self.laberinto.shape
+        return shape[:-1]
+    
+    
     def resetear(self):
         """limpia el laberinto"""
 

@@ -31,12 +31,17 @@ def distanciaMinima(l):
     """Función que partiendo de una lista de tuplas (l) devuelve el par de tuplas cuya distancia euclídea es mínima.
     Esta función utiliza fuerza bruta :@ """
 
-    distancias = []
-
+    d_min = distancia(l[0],l[1])
+    tupla_min = [l[0],l[1]]
+    
     for i in range(len(l) - 1):
-        for j in range(i + 1, len(l) - 1):
-            distancias.append(distancia(l[i], l[j]))
-    return min(distancias)
+        for j in range(i + 1, len(l)):
+            dist = distancia(l[i], l[j])
+            if dist < d_min:
+                d_min = dist
+                tupla_min[0] = l[i]
+                tupla_min[1] = l[j]
+    return tupla_min
 
 
 def distanciaMinimaDyC(l, algoritmo):
@@ -185,16 +190,26 @@ def mergeSort(l):
 
 #Funciones auxiliares para resolver distanciaMinimaDyC
 
+def parMin(l):
+    """Devuelve una lista con los indices d"""
+    
+    
+
+
 def minimaDistRecursiva(l):
     """Busca la distancia minima entre pares de coordenadas (x,y). La lista l 
     debe estar ordenada según el eje x."""
     
     dist = 0 #la distancia minima es mayor o igual a cero por definición
     
-    if len(l) == 2:
-        dist = distancia(l[0],l[1])
-        return dist
+    if len(l) == 1:
+        return [l[0]]
+    elif len(l) == 2:
+        return [l[0], l[1]]
     else:
+        
+        
+        
         dist = distancia(l[0],l[1])
         if dist < minimaDistRecursiva(l[1:]):
             return dist        

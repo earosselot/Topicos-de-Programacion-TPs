@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import ast
 import numpy as np
+import random
 
 
 class Laberinto(object):
@@ -16,6 +17,8 @@ class Laberinto(object):
         self.res_lab = []    # matriz de NxMx2, donde la capa 0, guarda las pocisiones visitadas y la capa
                                         # 1 guarda el camino actual. con 1 si es parte del camino actual/visitada y
                                         # 0 en caso contrario
+        self._camino = []
+        self._cantidad_movimientos = 0
 
     # interfaz (metodos publicos)
 
@@ -37,7 +40,9 @@ class Laberinto(object):
         self.tamano()
         self.setPosicionRata(0, 0)
         self.setPosicionQueso(self.shape[0] - 1, self.shape[1] - 1)
+        self._notescapes()
         self.resetear()
+        self._cantidad_movimientos = 0
 
     def tamano(self):
         """Metodo que devuelve una tupla con la cantidad de filas y columnas"""
@@ -119,45 +124,150 @@ class Laberinto(object):
         return self.PosQueso == self.PosRata
 
     def resolver(self):
+        """Metodo que resuelve el laberinto por backtraking"""
+        self._posible = []
+        self._inexplorado = []
+        self._pos_inexploradas = []
 
-
+        print('posRata: ', self.PosRata)
+        # 1. Lluegue al queso ?
+        #     1-a: si -> resuelto FIN
         if self.resuelto():
+            print('resuelto en %i movimientos' % self._cantidad_movimientos)
             return True
+        #     1-b: no ->
         else:
-
             i = self.PosRata[0]
             j = self.PosRata[1]
-
-            # obtiene los lugares del laberinto hacia donde es posible moverse
-            paredes = self.get(i, j)
-
-
-            if (not paredes[0]) and (not self.getInfoCelda(i-1, j).get('visitada')):
-                self.setPosicionRata(i-1, j)
-                self.res_lab[i, j, 1] = 1
-            elif (not paredes[1]) and (not self.getInfoCelda(i, j-1).get('visitada')):
-                self.setPosicionRata(i, j-1)
-                self.res_lab[i, j, 1] = 1
-            elif (not paredes[2]) and (not self.getInfoCelda(i + 1, j).get('visitada')):
-                self.setPosicionRata(i + 1, j)
-                self.res_lab[i, j, 1] = 1
-            elif (not paredes[3]) and (not self.getInfoCelda(i, j + 1).get('visitada')):
-                self.setPosicionRata(i, j + 1)
-                self.res_lab[i, j, 1] = 1
-
-
-            elif paredes[1]:
-            # me fijo hacia donde me puedo mover, en funcion de si ya fue visitada la casilla
-            if not paredes[1]:
-
-
-            self._volver()
-            self.resolver()
-
+            self._posible = self._and_listas(self._not_lista(self.get(i, j)), self._not_lista(self._getVisita(i, j)))
+            # posible: array booleano, si es True el movimiento hacia ese lugar es valido [izq, arr, der, ab]
+        # 2. hay lugares para moverse (sin paredes y sin visita)?
+        #   2-a: no -> no tiene solucion FIN
+            if self._todo_False(self._posible):
+                print('no resuelto en %i movimientos' % self._cantidad_movimientos)
+                return False
+        #     2-b: si ->
+            else:
+        # 3. hay alguno sin visitar (camino actual)? (posibles = True y camino = False)
+                # self._get_camino(i, j) -- True en los que son parte del camino
+                # posible -- True para donde se puede ir
+                self._inexplorado = self._and_listas(self._posible, self._not_lista(self._getCamino(i, j)))
+                self._pos_inexploradas = self._pos_true(self._inexplorado)
+        #   3-a: si -> sigo por ese (mover + marcar camino actual)
+                if len(self._pos_inexploradas) > 0:
+                    self._movimiento = random.choice(self._pos_inexploradas)  # elijo uno al azar entre los movimientos
+                    self.res_lab[i][j][1] = True  # marco el camino el lugar actual
+                    self._camino.append((i, j))   # guardo en el camino el lugar actual
+                    self._mover(i, j)       # muevo la rata
+                    self._cantidad_movimientos += 1
+                    self.resolver()
+        #   3-b: no -> vuelvo (mover + marcar visita + desmarcar camino actual)
+                else:
+                    self.setPosicionRata(self._camino[-1][0], self._camino[-1][1])    # vuelvo al ultimo lugar
+                    self._cantidad_movimientos += 1
+                    self.res_lab[i][j][0] = True        # marco el camino como visitado
+                    self.res_lab[i][j][1] = False       # lo desmarco como camino actual
+                    self._camino.pop(-1)
+                    self.resolver()
 
     # COMPLETAR CON LOS METODOS PEDIDOS
-
     # auxiliares (metodos privados)
+
+    def _mover(self, i, j):
+        """mueve la rata desde el casillero (i, j) al casillero que indica movimiento
+        0: izquierda, 1: arriba, 2: derecha, 3(else): abajo"""
+
+        if self._movimiento == 0:
+            self.setPosicionRata(i, j-1)
+        elif self._movimiento == 1:
+            self.setPosicionRata(i-1, j)
+        elif self._movimiento == 2:
+            self.setPosicionRata(i, j+1)
+        elif self._movimiento == 3:
+            self.setPosicionRata(i+1, j)
+
+    def _pos_true(self, l1):
+        """devuelve una lista con las posiciones de la lista que tienen True"""
+        trues = []
+        for i in range(len(l1)):
+            if l1[i]:
+                trues.append(i)
+        return trues
+
+    def _todo_False(self, l1):
+        """devuelve True si todos los elementos de la lista l1 son False"""
+        i = 0
+        while i < len(l1) and l1[i] == False:
+            i += 1
+        if i == len(l1):
+            return True
+        else:
+            return False
+
+    def _and_listas(self, l1, l2):
+        """hace un and elemento a elemento entre dos listas del mismo tamano y devuelve una lista con los resultados"""
+        list_and = []
+        for i in range(len(l1)):
+            list_and.append(l1[i] and l2[i])
+        return list_and
+
+    def _not_lista(self, l1):
+        """aplica not a todos los elementos de una lista l1 y devuelve la lista negada"""
+
+        for i in range(len(l1)):
+            l1[i] = not(l1[i])
+        return l1
+
+    def _getVisita(self, i, j):
+        """Metodo que segun una coordenada (i,j) devuelve una lista booleana en funcion si las casillas adyacentes
+        fueron o no visitadas con el siguiente arreglo visita = [izquierda, arriba, derecha, abajo]"""
+
+        visita = [False, False, False, False]
+        # hacia iquierda
+        if j != 0:
+            vis = self.res_lab[i][j-1][0]
+            visita[0] = vis
+        # hacia derecha
+        if j != self.shape[1] - 1:
+            vis = self.res_lab[i][j+1][0]
+            visita[2] = vis
+        # hacia arriba
+        if i != 0:
+            vis = self.res_lab[i-1][j][0]
+            visita[1] = vis
+        # hacia abajo
+        if i != self.shape[0] - 1:
+            vis = self.res_lab[i+1][j][0]
+            visita[3] = vis
+        return visita
+
+    def _getCamino(self, i, j):
+        """Metodo que segun una coordenada (i,j) devuelve una lista booleana en funcion si las casillas adyacentes
+        son o no parte del camino actual con el siguiente arreglo camino = [izquierda, arriba, derecha, abajo]"""
+
+        camino = [False, False, False, False]
+        # hacia iquierda
+        if j != 0:
+            camino[0] = self.res_lab[i][j-1][1]
+        # hacia derecha
+        if j != self.shape[1] - 1:
+            camino[2] = self.res_lab[i][j+1][1]
+        # hacia arriba
+        if i != 0:
+            camino[1] = self.res_lab[i-1][j][1]
+            # hacia abajo
+        if i != self.shape[0] - 1:
+            camino[3] = self.res_lab[i+1][j][1]
+        return camino
+
+    def _notescapes(self):
+        """Metodo que cierra las salida de emergencia -.-"""
+        for i in range(self.shape[0]):
+            self.laberinto[i][0][0] = 1
+            self.laberinto[i][self.shape[1]-1][2] = 1
+        for j in range(self.shape[1]):
+            self.laberinto[0][j][1] = 1
+            self.laberinto[self.shape[0]-1][j][3] = 1
 
     def _redibujar(self):
         if self.parent is not None:

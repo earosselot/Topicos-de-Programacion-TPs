@@ -31,7 +31,7 @@ def distanciaMinima(l):
     """Función que partiendo de una lista de tuplas (l) devuelve el par de tuplas cuya distancia euclídea es mínima.
     Esta función utiliza fuerza bruta :@ """
 
-     distRef = distancia(l[0],l[1]) #es mi distancia de referencia.
+    distRef = distancia(l[0],l[1]) #es mi distancia de referencia.
     
     if len(l) == 2:
         return l
@@ -172,7 +172,7 @@ def minimaDistRec(l):
     #Planteo el caso base
     if len(l) <= 3:  #si tengo 3 o menos puntos, uso fuerza bruta
         par = distanciaMinima(l)
-        dist = distancia(pares[0],pares[1])
+        dist = distancia(par[0],par[1])
         #Le pido de devuelve el par (es lo que me interesa) y la distancia (voy a necesitarla para calcular)
         return par,dist 
     
@@ -188,16 +188,28 @@ def minimaDistRec(l):
         #hago el paso recursivo      
         minIz = minimaDistRec(mIz)
         minDer = minimaDistRec(mDer)         
-                        
+        print(minIz)
+        print(minDer)               
         #Busco posibles pares de puntos entre los grupos de izquierda y derecha
         mezcla = paresCruzados(minIz[0],minDer[0],CorteEnX,min(minIz[1],minDer[1]))
-        
-        #calculo la menor distancia de los puntos mezclados 
-        minMezcla = distanciaMinima(mezcla)
-        dist = distancia(minMezcla[0],minMezcla[1])
-        
-        dist_min = min(minIz[1],minDer[1],dist)
-        return dist_min
+        print(mezcla)
+        if len(mezcla) > 1: #si la longitud es mayor a 1, chequeo.
+            minMezcla = distanciaMinima(mezcla)
+            
+            #sólo me queda elegir el par más chico
+            posRes = [minIz[0], minDer[0], minMezcla]
+            Res = minMezcla #tomo como referencia el par de puntos obtenidos de mezclar
+            
+            for i in range(len(posRes)):
+                if distancia(posRes[i][0],posRes[i][1]) < distancia(Res[0],Res[1]):
+                    Res = posRes[i]
+            return Res
+        else:
+            if minIz[1] < minDer[1]:
+                return minIz[0]
+            else:
+                return minDer[0]
+            
     
            
 def paresCruzados(l1,l2,x,dist):

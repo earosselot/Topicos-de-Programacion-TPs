@@ -31,17 +31,20 @@ def distanciaMinima(l):
     """Función que partiendo de una lista de tuplas (l) devuelve el par de tuplas cuya distancia euclídea es mínima.
     Esta función utiliza fuerza bruta :@ """
 
-    d_min = distancia(l[0],l[1])
-    tupla_min = [l[0],l[1]]
+     distRef = distancia(l[0],l[1]) #es mi distancia de referencia.
     
-    for i in range(len(l) - 1):
-        for j in range(i + 1, len(l)):
-            dist = distancia(l[i], l[j])
-            if dist < d_min:
-                d_min = dist
-                tupla_min[0] = l[i]
-                tupla_min[1] = l[j]
-    return tupla_min
+    if len(l) == 2:
+        return l
+    
+    else:    
+        for i in range(0,len(l)-1):
+            for j in range(i+1,len(l)):  
+                d = distancia(l[i],l[j])
+                if d <= distRef:
+                    distRef = d
+                    par = [l[i],l[j]]
+    return par
+    
 
 
 def distanciaMinimaDyC(l, algoritmo):
@@ -57,34 +60,7 @@ def distanciaMinimaDyC(l, algoritmo):
     else:
         print("Parámetro inválido, usar 'up', 'python' ó 'merge'")
             
-    #divido la lista ordenada en dos mitades
-    sublista = dividirEnDos(l)
-    mitadIzquierda = sublista[0]
-    mitadDerecha = sublista[1]
-    CorteEnX = sublista[2]
-    
-    #Aclaración: La técnica Divide&Conquer genera tres grupos de posibles resultados:
-    #la distancia mínimo de la lista izquierda, la distancia mínimo de la lista 
-    #derecha (grupo 1 y 2) y la distancia mínimo de combinar 1 con 2 (grupo 3)
-    
-    #busco recursivamente la distancia minima en la parte izquierda y derecha
-    #y la guardo en la lista minimos (minimos contienen los resultados de los
-    #grupos 1 y 2)
-    minimos = []
-    minimos.append(minimaDistRecursiva(mitadIzquierda))
-    minimos.append(minimaDistRecursiva(mitadDerecha))
-    DistanciaAlCorte = min(minimos)
-    
-    #reviso los pares de puntos entre el CorteEnX y DistanciasAlCorte.
-    posiblesPares = paresAtestear(mitadIzquierda,mitadDerecha,CorteEnX,DistanciaAlCorte)
-
-    #El paso de combinar no es siempre necesario. Si posiblesPares devuelve
-    #un sólo elemento, ya tengo solución.
-    
-    if type(posiblesPares) == float: 
-        return posiblesPares
-    else:
-        return minimaDistRecursiva(posiblesPares)
+    #ACÁ VA LA FUNCIÓN RECURSIVA
 
 
 """
@@ -99,10 +75,10 @@ def entero(a):
     return a
 
 
-def distancia(x, y):
+def distancia(p1, p2): #lo cambié porque me confundian los nombre jeje
     """Función que calcula y devuelve la distancia euclídea entre dos tuplas de entrada (x e y)"""
 
-    return (((x[0] - y[0])**2) + ((x[1] - y[1])**2)) ** (1/2)
+    return (((p1[0] - p2[0])**2) + ((p1[1] - p2[1])**2)) ** (1/2)
 
 """
 FUNCIONES AUXILIARES PARA CALCULAR LA DISTANCIA USANDO DIVIDE & CONQUER
@@ -190,33 +166,41 @@ def mergeSort(l):
 
 #Funciones auxiliares para resolver distanciaMinimaDyC
 
-def parMin(l):
-    """Devuelve una lista con los indices d"""
+def minimaDistRec(l):
+    """Devuelve el par de puntos más cercanos. Necesita una lista ordenada en x """
     
+    #Planteo el caso base
+    if len(l) <= 3:  #si tengo 3 o menos puntos, uso fuerza bruta
+        par = distanciaMinima(l)
+        dist = distancia(pares[0],pares[1])
+        #Le pido de devuelve el par (es lo que me interesa) y la distancia (voy a necesitarla para calcular)
+        return par,dist 
     
-
-
-def minimaDistRecursiva(l):
-    """Busca la distancia minima entre pares de coordenadas (x,y). La lista l 
-    debe estar ordenada según el eje x."""
-    
-    dist = 0 #la distancia minima es mayor o igual a cero por definición
-    
-    if len(l) == 1:
-        return [l[0]]
-    elif len(l) == 2:
-        return [l[0], l[1]]
     else:
+        #divido la lista en dos mitades (izquierda y derecha)
+        mitades = dividirEnDos(l)
         
+        #separo mis mitades en dos listas y guardo el punto medio
+        mIz = mitades[0]
+        mDer = mitades[1]
+        CorteEnX = mitades[2]
         
+        #hago el paso recursivo      
+        minIz = minimaDistRec(mIz)
+        minDer = minimaDistRec(mDer)         
+                        
+        #Busco posibles pares de puntos entre los grupos de izquierda y derecha
+        mezcla = paresCruzados(minIz[0],minDer[0],CorteEnX,min(minIz[1],minDer[1]))
         
-        dist = distancia(l[0],l[1])
-        if dist < minimaDistRecursiva(l[1:]):
-            return dist        
-        else:
-            return minimaDistRecursiva(l[1:])
+        #calculo la menor distancia de los puntos mezclados 
+        minMezcla = distanciaMinima(mezcla)
+        dist = distancia(minMezcla[0],minMezcla[1])
         
-def paresAtestear(l1,l2,x,dist):
+        dist_min = min(minIz[1],minDer[1],dist)
+        return dist_min
+    
+           
+def paresCruzados(l1,l2,x,dist):
     """Esta función busca los pares que quedan por resolver. Es el paso de
     combinar"""
     posiblesPares = []

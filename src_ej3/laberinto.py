@@ -6,43 +6,6 @@ import sys
 # Cambio el limite de recursion para que llegue a resolver los laberintos
 sys.setrecursionlimit(3000)
 
-# Funciones estaticas (por fuera de la calase)
-
-
-def pos_true(l1):
-    """devuelve una lista con las posiciones de la lista que tienen True"""
-    trues = []
-    for i in range(len(l1)):
-        if l1[i]:
-            trues.append(i)
-    return trues
-
-
-def todo_False(l1):
-    """devuelve True si todos los elementos de la lista l1 son False"""
-    i = 0
-    while i < len(l1) and l1[i] is False:
-        i += 1
-    if i == len(l1):
-        return True
-    else:
-        return False
-
-
-def and_listas(l1, l2):
-    """hace un and elemento a elemento entre dos listas del mismo tamano y devuelve una lista con los resultados"""
-    list_and = []
-    for i in range(len(l1)):
-        list_and.append(l1[i] and l2[i])
-    return list_and
-
-
-def not_lista(l1):
-    """aplica not a todos los elementos de una lista l1 y devuelve la lista negada"""
-    for i in range(len(l1)):
-        l1[i] = not (l1[i])
-    return l1
-
 
 class Laberinto(object):
     """"Vamos de definir funciones para crear un laberinto.
@@ -87,7 +50,6 @@ class Laberinto(object):
         self._notescapes()
         self.resetear()
         self._cantidad_movimientos = 0
-        # self._redibujar()
 
     def tamano(self):
         """Metodo que devuelve una tupla con la cantidad de filas y columnas"""
@@ -99,7 +61,7 @@ class Laberinto(object):
         for i in range(self.shape[0]):
             fila = []
             for j in range(self.shape[1]):
-                fila.append([False, False])
+                fila.append({'visitada': False, 'caminoActual': False})
             self._res_lab.append(fila)
 
     def getPosicionRata(self):
@@ -161,7 +123,7 @@ class Laberinto(object):
         El diccionario tiene dos claves: visitada y caminoActual. La clave visitada es un booleano que
         indica si la celda fue visitada por el backtracking, mientras que caminoActual indica si es parte del camino
         actual que está siendo probado por el backtracking"""
-        return {'visitada': self._res_lab[i][j][0], 'caminoActual': self._res_lab[i][j][1]}
+        return self._res_lab[i][j]
 
     def resuelto(self):
         """devuelve True si el laberinto está resuelto, es decir, si la posición de la rata es la misma que
@@ -184,11 +146,11 @@ class Laberinto(object):
             i = self.PosRata[0]
             j = self.PosRata[1]
             # posible: lista booleano, si es True el movimiento hacia ese lugar es valido [izq, arr, der, ab]
-            posible = and_listas(not_lista(self.get(i, j)), not_lista(self._getVisita(i, j)))
+            posible = self._and_listas(self._not_lista(self.get(i, j)), self._not_lista(self._getVisita(i, j)))
 
         # 2. hay lugares para moverse (sin paredes y sin visita)?
         #   2-a: no -> no tiene solucion FIN
-            if todo_False(posible):
+            if self._todo_False(posible):
                 print("NO resuleto en %i movimientos" % self._cantidad_movimientos)
                 return False
         #     2-b: si ->
@@ -198,13 +160,13 @@ class Laberinto(object):
                 # self._get_camino(i, j) -- True en los que son parte del camino
                 # posible -- True para donde se puede ir
                 # inexplorado: lista de 4 elementos, True en las direcciones inexploradas
-                inexplorado = and_listas(posible, not_lista(self._getCamino(i, j)))
+                inexplorado = self._and_listas(posible, self._not_lista(self._getCamino(i, j)))
                 # pos_inexploradas: lista de los indices donde inexplorado es True (o vacia, si no hay Trues)
-                pos_inexploradas = pos_true(inexplorado)
+                pos_inexploradas = self._pos_true(inexplorado)
         #   3-a: si -> sigo por ese (mover + marcar camino actual)
                 if len(pos_inexploradas) > 0:
                     movimiento = random.choice(pos_inexploradas)    # elijo uno al azar entre los movimientos
-                    self._res_lab[i][j][1] = True                    # marco el lugar actual como camino
+                    self._res_lab[i][j]["caminoActual"] = True                   # marco el lugar actual como camino
                     self._camino.append((i, j))                     # guardo en el _camino el lugar actual
                     self._mover(movimiento, i, j)                   # muevo la rata
                     self._cantidad_movimientos += 1                 # contador de movimientos(para estimar el rec.limit)
@@ -214,8 +176,8 @@ class Laberinto(object):
                 else:
                     self.setPosicionRata(self._camino[-1][0], self._camino[-1][1])    # vuelvo al ultimo lugar
                     self._cantidad_movimientos += 1
-                    self._res_lab[i][j][0] = True                    # marco el camino como visitado
-                    self._res_lab[i][j][1] = False                   # lo desmarco como camino actual
+                    self._res_lab[i][j]["visitada"] = True                    # marco el camino como visitado
+                    self._res_lab[i][j]["caminoActual"] = False               # lo desmarco como camino actual
                     self._camino.pop(-1)                            # elimino la casilla del _camino
                     self._redibujar()
                     self.resolver()                                 # llamada recursiva
@@ -240,19 +202,19 @@ class Laberinto(object):
         visita = [False, False, False, False]
         # hacia iquierda
         if j != 0:
-            vis = self._res_lab[i][j-1][0]
+            vis = self._res_lab[i][j-1]["visitada"]
             visita[0] = vis
         # hacia derecha
         if j != self.shape[1] - 1:
-            vis = self._res_lab[i][j+1][0]
+            vis = self._res_lab[i][j+1]["visitada"]
             visita[2] = vis
         # hacia arriba
         if i != 0:
-            vis = self._res_lab[i-1][j][0]
+            vis = self._res_lab[i-1][j]["visitada"]
             visita[1] = vis
         # hacia abajo
         if i != self.shape[0] - 1:
-            vis = self._res_lab[i+1][j][0]
+            vis = self._res_lab[i+1][j]["visitada"]
             visita[3] = vis
         return visita
 
@@ -262,16 +224,16 @@ class Laberinto(object):
         camino = [False, False, False, False]
         # hacia iquierda
         if j != 0:
-            camino[0] = self._res_lab[i][j-1][1]
+            camino[0] = self._res_lab[i][j-1]["caminoActual"]
         # hacia derecha
         if j != self.shape[1] - 1:
-            camino[2] = self._res_lab[i][j+1][1]
+            camino[2] = self._res_lab[i][j+1]["caminoActual"]
         # hacia arriba
         if i != 0:
-            camino[1] = self._res_lab[i-1][j][1]
+            camino[1] = self._res_lab[i-1][j]["caminoActual"]
             # hacia abajo
         if i != self.shape[0] - 1:
-            camino[3] = self._res_lab[i+1][j][1]
+            camino[3] = self._res_lab[i+1][j]["caminoActual"]
         return camino
 
     def _notescapes(self):
@@ -282,6 +244,37 @@ class Laberinto(object):
         for j in range(self.shape[1]):
             self.laberinto[0][j][1] = 1
             self.laberinto[self.shape[0]-1][j][3] = 1
+
+    def _pos_true(self, l1):
+        """devuelve una lista con las posiciones de la lista que tienen True"""
+        trues = []
+        for i in range(len(l1)):
+            if l1[i]:
+                trues.append(i)
+        return trues
+
+    def _todo_False(self, l1):
+        """devuelve True si todos los elementos de la lista l1 son False"""
+        i = 0
+        while i < len(l1) and l1[i] is False:
+            i += 1
+        if i == len(l1):
+            return True
+        else:
+            return False
+
+    def _and_listas(self, l1, l2):
+        """hace un and elemento a elemento entre dos listas del mismo tamano y devuelve una lista con los resultados"""
+        list_and = []
+        for i in range(len(l1)):
+            list_and.append(l1[i] and l2[i])
+        return list_and
+
+    def _not_lista(self, l1):
+        """aplica not a todos los elementos de una lista l1 y devuelve la lista negada"""
+        for i in range(len(l1)):
+            l1[i] = not (l1[i])
+        return l1
 
     def _redibujar(self):
         if self.parent is not None:

@@ -16,8 +16,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-
-
 from PyQt4.QtCore import QDir
 from PyQt4 import uic
 from PyQt4.QtGui import QApplication, QMainWindow, QFileDialog, QMessageBox

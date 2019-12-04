@@ -17,10 +17,12 @@
 import operator, traceback
 import iconos
 
-from PyQt5.QtCore import QSize, Qt
-# from PyQt4.QtGui import QBrush, QPainter, QFrame, QImage
-from PyQt5.QtGui import QBrush, QPainter, QImage
-from PyQt5.QtWidgets import QFrame
+from PyQt4.QtCore import QSize, Qt
+from PyQt4.QtGui import QBrush, QPainter, QFrame, QImage
+
+# from PyQt5.QtCore import QSize, Qt
+# from PyQt5.QtGui import QBrush, QPainter, QImage
+# from PyQt5.QtWidgets import QFrame
 
 from laberintoThread import LaberintoThread
 

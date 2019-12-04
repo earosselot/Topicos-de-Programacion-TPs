@@ -1,11 +1,10 @@
+# -*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
-from scipy.interpolate import make_interp_spline, BSpline
-import scipy
 import numpy as np
 
 
 def Sort(sub_li, elem):
-    # ordena la lista de listas segun un elemento pasado como parametro (elem)
+    """ordena la lista de listas segun un elemento pasado como parametro (elem)"""
 
     return (sorted(sub_li, key=lambda x: x[elem]))
 
@@ -51,10 +50,10 @@ with open('resultados_final.csv', 'r') as resultados:
 
 
     # arranco el subplot gray
-    fig, axs = plt.subplots(2, 4)
-    fig.suptitle('Escalabilidad_gray')
-    fig.text(0.5, 0.04, '# de threads', ha='center')
-    fig.text(0.04, 0.5, 'tiempo (ms)', va='center', rotation='vertical')
+    fig, axs = plt.subplots(2, 4, figsize=(10,10))
+    fig.suptitle('Escalabilidad (filtro gray)', fontweight = "bold", fontsize = 18)
+    fig.text(0.5, 0.04, 'Número de threads', ha='center', fontsize = 15)
+    fig.text(0.04, 0.5, 'Tiempo (ms)', va='center', rotation='vertical', fontsize = 15)
 
 
     # genera los subplots
@@ -64,13 +63,14 @@ with open('resultados_final.csv', 'r') as resultados:
             axs[i, j].set_title(title[(4 * i) + j])
             axs[i, j].set_xticks([2, 4, 6, 8, 10, 12, 14, 16])
             # plt.xticks([2, 4, 6, 8, 10, 12, 14, 16])
+    plt.subplots_adjust(wspace=0.3)
     plt.show()
 
-    # Figura Blur
-    fig1, axs = plt.subplots(2, 4)
-    fig1.suptitle('Escalabilidad_blur')
-    fig1.text(0.5, 0.04, '# de threads', ha='center')
-    fig1.text(0.04, 0.5, 'tiempo de ejecucion (ms)', va='center', rotation='vertical')
+    # Figura 
+    fig1, axs = plt.subplots(2, 4, figsize=(10,10))
+    fig1.suptitle('Escalabilidad (filtro blur)', fontweight = "bold", fontsize = 18)
+    fig1.text(0.5, 0.04, 'Número de threads', ha='center', fontsize = 15)
+    fig1.text(0.04, 0.5, 'Tiempo de ejecucion (ms)', va='center', rotation='vertical', fontsize = 15)
 
     # genera los subplots
     for i in range(axs.shape[0]):
@@ -79,4 +79,6 @@ with open('resultados_final.csv', 'r') as resultados:
             axs[i, j].set_title(title[(4 * i) + j])
             axs[i, j].set_xticks([2, 4, 6, 8, 10, 12, 14, 16])
             # plt.xticks([2, 4, 6, 8, 10, 12, 14, 16])
+    
+    plt.subplots_adjust(wspace=0.5)
     plt.show()

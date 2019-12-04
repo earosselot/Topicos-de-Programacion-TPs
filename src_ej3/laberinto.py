@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import ast
-import numpy as np
 import random
 import sys
 
@@ -51,10 +50,10 @@ class Laberinto(object):
 
     def __init__(self, parent=None):
         self.parent = parent
-        self.laberinto = np.array([])
+        self.laberinto = []
         self.PosRata = (0, 0)
         self.PosQueso = (0, 0)
-        self.shape = [0, 0]
+        self.shape = (0, 0)
         # self._res_lab: matriz de NxMx2, donde la capa 0, guarda las pocisiones visitadas y la capa 1 guarda el camino
         # actual. Se marca True si es parte del camino actual/visitada y False en caso contrario.
         self._res_lab = []
@@ -71,26 +70,28 @@ class Laberinto(object):
         with open(fn, 'r') as entrada:
             corch1 = '['        # creo unas cadenas para poder rellenar el ppio y el final de los split
             corch2 = ']'
-            next(entrada)       # saltea la primera linea
-            for linea in entrada:       # recorre la entrada (desde la segunda linea)
+            next(entrada)                                               # saltea la primera linea
+            for linea in entrada:                                       # recorre la entrada (desde la segunda linea)
                 linea = linea.strip('\n').lstrip('[').rstrip(']')       # recorte del \n y del corchete inicial y final
-                fila = []               # vacia la fila para cada itereacion
+                fila = []                                               # vacia la fila para cada itereacion
                 for casillero in linea.split(']['):     # divide la linea donde abren y cierran corchetes
                     fila.append(ast.literal_eval(corch1+casillero+corch2))   # ast.lit pasa un str a lista
-                listaDeCeldas.append(fila)  # agrego la fila al laberinto
-        self.laberinto = np.array(listaDeCeldas)
+                listaDeCeldas.append(fila)      # agrego la fila al laberinto
+        self.laberinto = listaDeCeldas
         # obtengo el tamano del laberinto y seteo las posiciones del queso y la rata
-        self.tamano()
+        m = len(self.laberinto)
+        n = len(self.laberinto[1])
+        self.shape = (m, n)
         self.setPosicionRata(0, 0)
         self.setPosicionQueso(self.shape[0] - 1, self.shape[1] - 1)
         self._notescapes()
         self.resetear()
         self._cantidad_movimientos = 0
-        self._redibujar()
+        # self._redibujar()
 
     def tamano(self):
         """Metodo que devuelve una tupla con la cantidad de filas y columnas"""
-        self.shape = self.laberinto.shape[:-1]
+        return self.shape
 
     def resetear(self):
         """metodo que limpia el laberinto"""
@@ -148,7 +149,7 @@ class Laberinto(object):
         de los 4 bordes de la celda ubicada en la fila i, columna j. El orden en el que deben aparecer los bordes es el
         siguiente: Izquierda, Arriba, Derecha, Abajo"""
         celda_bool = []
-        for elem in self.laberinto[i, j, :]:
+        for elem in self.laberinto[i][j]:
             if elem == 0:
                 celda_bool.append(False)
             else:
@@ -175,18 +176,20 @@ class Laberinto(object):
         # 1. Lluegue al queso ?
         #     1-a: si -> resuelto FIN
         if self.resuelto():
+            print("resuleto en %i movimientos" % self._cantidad_movimientos)
             return True
         #     1-b: no ->
         else:
             # guardo la posicion actual porque se usa mucho y el codigo queda mas entendible
             i = self.PosRata[0]
             j = self.PosRata[1]
-            # posible: array booleano, si es True el movimiento hacia ese lugar es valido [izq, arr, der, ab]
+            # posible: lista booleano, si es True el movimiento hacia ese lugar es valido [izq, arr, der, ab]
             posible = and_listas(not_lista(self.get(i, j)), not_lista(self._getVisita(i, j)))
 
         # 2. hay lugares para moverse (sin paredes y sin visita)?
         #   2-a: no -> no tiene solucion FIN
             if todo_False(posible):
+                print("NO resuleto en %i movimientos" % self._cantidad_movimientos)
                 return False
         #     2-b: si ->
             else:

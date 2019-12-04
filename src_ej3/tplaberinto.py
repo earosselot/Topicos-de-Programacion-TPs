@@ -16,9 +16,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from PyQt4.QtCore import QDir
-from PyQt4.QtGui import QApplication, QMainWindow, QFileDialog, QMessageBox
-from PyQt4 import uic
+from PyQt5.QtCore import QDir
+# from PyQt4.QtGui import QApplication, QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
+from PyQt5 import uic
 
 def trace(f):
     def _f(*args, **kwargs):
@@ -62,7 +63,7 @@ class LaberintoViewer(QMainWindow):
 
     def load(self):
         fn = QFileDialog.getOpenFileName(self, "Cargar laberinto",
-                QDir.currentPath(), "Laberintos (*.lab);;*")
+                QDir.currentPath(self), "Laberintos (*.lab)")
         
         # QFileDialog.getOpenFileName devuelve '' si el usuario cancelo
         if len(fn) > 0:

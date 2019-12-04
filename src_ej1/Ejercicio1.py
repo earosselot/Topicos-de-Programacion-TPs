@@ -58,9 +58,11 @@ def distanciaMinimaDyC(l, algoritmo):
     elif algoritmo == "merge":
         mergeSort(l)
     else:
-        print("Parámetro inválido, usar 'up', 'python' ó 'merge'")
+        return "Parámetro inválido, usar 'up', 'python' ó 'merge'"
             
-    #ACÁ VA LA FUNCIÓN RECURSIVA
+    ParMinimo = minimaDistRec(l) #busca de manera recursiva
+    
+    return ParMinimo 
 
 
 """
@@ -172,9 +174,7 @@ def minimaDistRec(l):
     #Planteo el caso base
     if len(l) <= 3:  #si tengo 3 o menos puntos, uso fuerza bruta
         par = distanciaMinima(l)
-        dist = distancia(par[0],par[1])
-        #Le pido de devuelve el par (es lo que me interesa) y la distancia (voy a necesitarla para calcular)
-        return par,dist 
+        return par 
     
     else:
         #divido la lista en dos mitades (izquierda y derecha)
@@ -188,16 +188,19 @@ def minimaDistRec(l):
         #hago el paso recursivo      
         minIz = minimaDistRec(mIz)
         minDer = minimaDistRec(mDer)         
-        print(minIz)
-        print(minDer)               
+        dIz = distancia(minIz[0],minIz[1])
+        dDer = distancia(minDer[0],minIz[1])
+                      
+        
         #Busco posibles pares de puntos entre los grupos de izquierda y derecha
-        mezcla = paresCruzados(minIz[0],minDer[0],CorteEnX,min(minIz[1],minDer[1]))
-        print(mezcla)
+        mezcla = paresCruzados(minIz,minDer,CorteEnX,min(dIz,dDer))
+        
+        #Este es el paso de conquistar
         if len(mezcla) > 1: #si la longitud es mayor a 1, chequeo.
             minMezcla = distanciaMinima(mezcla)
             
             #sólo me queda elegir el par más chico
-            posRes = [minIz[0], minDer[0], minMezcla]
+            posRes = [minIz, minDer, minMezcla]
             Res = minMezcla #tomo como referencia el par de puntos obtenidos de mezclar
             
             for i in range(len(posRes)):
@@ -205,13 +208,12 @@ def minimaDistRec(l):
                     Res = posRes[i]
             return Res
         else:
-            if minIz[1] < minDer[1]:
-                return minIz[0]
+            if dIz < dDer:
+                return minIz
             else:
-                return minDer[0]
+                return minDer
             
-    
-           
+               
 def paresCruzados(l1,l2,x,dist):
     """Esta función busca los pares que quedan por resolver. Es el paso de
     combinar"""
@@ -222,11 +224,8 @@ def paresCruzados(l1,l2,x,dist):
     for i in range(len(l2)):
         if (l2[i][0] - x) <= dist:
             posiblesPares.append(l2[i])
-    
-    if len(posiblesPares) != 0:
-        return posiblesPares
-    else:
-        return dist
+      
+    return posiblesPares
             
 
 """
@@ -259,7 +258,7 @@ def puntosAleatorios(a,b):
     return miSet
 
 #ParesDiez = puntosAleatorios(10,100)
-#ParesCien = puntosAleatorios(100,1000)
+ParesCien = puntosAleatorios(100,1000)
 #ParesMil = puntosAleatorios(1000,10000)
 #ParesCincoMil = puntosAleatorios(5000,100000)
 

@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-# Topicos de Programacion 2019 - Trabajo Practico - Ejercicio 1 #
-# Grupo N ####
+
+# Topicos de Programacion 2019 - Trabajo Practico - Ejercicio 1 
+# Grupo 1
 # Perez Frasette, Maximiliano - Rosselot, Eduardo Agustin
 
 import time
 import random
 import matplotlib.pyplot as plt
+import numpy as np
 
 """
 FUNCIONES PRINCIPALES
@@ -22,16 +24,16 @@ def listaDePuntos(fn):
             linea = linea.strip('\n')         # Elimina el salto de línea del final
             camposDeLinea = linea.split(' ')  # Se parte la cadena de la línea entera y se genera una lista
             entero(camposDeLinea)
-            # Se agrega la tupla de  la línea a la lista de tuplas completa
+            # Se agrega la tupla de la línea a la lista de tuplas completa
             tuplas.append(tuple(camposDeLinea))
     return tuplas
 
 
 def distanciaMinima(l):
     """Función que partiendo de una lista de tuplas (l) devuelve el par de tuplas cuya distancia euclídea es mínima.
-    Esta función utiliza fuerza bruta :@ """
+    Esta función utiliza fuerza bruta :@. Necesita recibir una lista de al menos dos elementos"""
 
-    distRef = distancia(l[0],l[1]) #es mi distancia de referencia.
+    distRef = distancia(l[0],l[1]) #es una distancia de referencia.
     
     if len(l) == 2:
         return l
@@ -48,7 +50,7 @@ def distanciaMinima(l):
 
 
 def distanciaMinimaDyC(l, algoritmo):
-    """Esta función es análoga a 'distanciaMinima', pero utiliza la técnica de Divide & Conquer"""
+    """Esta función es análoga a 'distanciaMinima', pero utiliza la técnica de Divide & Conquer ^.^"""
     
     #Preprocesamiento: ordenamiento de la lista l
     if algoritmo == "python":
@@ -60,7 +62,8 @@ def distanciaMinimaDyC(l, algoritmo):
     else:
         return "Parámetro inválido, usar 'up', 'python' ó 'merge'"
             
-    ParMinimo = minimaDistRec(l) #busca de manera recursiva
+    #Procesamiento: busca de manera recursiva el par más cercano usando DyC.
+    ParMinimo = minimaDistRec(l)
     
     return ParMinimo 
 
@@ -70,20 +73,20 @@ FUNCIONES AUXILIARES PARA CALCULAR LA DISTANCIA
 """
 
 def entero(a):
-    """funcion que convierte los numeros (que estan como string) en una lista a float"""
+    """Función que convierte los numeros (que estan como string) en una lista a float"""
 
     for i in range(len(a)):
         a[i] = float(a[i])
     return a
 
 
-def distancia(p1, p2): #lo cambié porque me confundian los nombre jeje
-    """Función que calcula y devuelve la distancia euclídea entre dos tuplas de entrada (x e y)"""
+def distancia(p1, p2):
+    """Función que calcula y devuelve la distancia euclídea entre dos tuplas de entrada (p1 y p2)"""
 
     return (((p1[0] - p2[0])**2) + ((p1[1] - p2[1])**2)) ** (1/2)
 
 """
-FUNCIONES AUXILIARES PARA CALCULAR LA DISTANCIA USANDO DIVIDE & CONQUER
+FUNCIONES AUXILIARES PARA ENCONTRAR EL PAR MINIMO USANDO DIVIDE & CONQUER
 """
 
 #funciones auxiliares para implementar upsort
@@ -112,11 +115,11 @@ def upSort(l): # es el código que Esteban dió en la teórica
     return l
 
 #funciones auxiliares para implementar mergeSort
-
 def dividirEnDos(l):
     """Divide a la lista l en dos mitades, si la lista es mayor a 2.
     Si tiene cantidad impar de elementos, la primer mitad es mas chica.
     El último elemento de la lista resultado es la coordenada de corte"""
+    
     if len(l) < 3:
         return l
     else:
@@ -129,13 +132,13 @@ def dividirEnDos(l):
 
 
 def merge(l1, l2):
-    """funcion que a partir de dos listas ordenadas (l1 y l2), devuelve una lista con los elementos
+    """Función que a partir de dos listas ordenadas (l1 y l2), devuelve una lista con los elementos
     de l1 y l2 ordenados."""
 
-    # creo una lista vacia para guardar los elementos ordenados
+    #Creo una lista vacia para guardar los elementos ordenados
     merged = []
 
-    # ciclo que se ejecuta hasta que una de las listas no tiene elementos
+    #ciclo que se ejecuta hasta que una de las listas no tiene elementos
     while len(l1) > 0 and len(l2) > 0:
         # estos if comparan los primeros elementos de la lista, guardan el menor en la lista ordenada,
         # y lo eliminan de la lista original (para que el bucle termine)
@@ -167,7 +170,6 @@ def mergeSort(l):
         return merge(mergeSort(lista_dividida[0]), mergeSort(lista_dividida[1]))
 
 #Funciones auxiliares para resolver distanciaMinimaDyC
-
 def minimaDistRec(l):
     """Devuelve el par de puntos más cercanos. Necesita una lista ordenada en x """
     
@@ -189,8 +191,8 @@ def minimaDistRec(l):
         minIz = minimaDistRec(mIz)
         minDer = minimaDistRec(mDer)         
         dIz = distancia(minIz[0],minIz[1])
-        dDer = distancia(minDer[0],minIz[1])
-                      
+        dDer = distancia(minDer[0],minDer[1])
+        
         
         #Busco posibles pares de puntos entre los grupos de izquierda y derecha
         mezcla = paresCruzados(minIz,minDer,CorteEnX,min(dIz,dDer))
@@ -217,7 +219,9 @@ def minimaDistRec(l):
 def paresCruzados(l1,l2,x,dist):
     """Esta función busca los pares que quedan por resolver. Es el paso de
     combinar"""
+    
     posiblesPares = []
+    
     for i in range(len(l1)):
         if  (x - l1[i][0]) <= dist:
             posiblesPares.append(l1[i])
@@ -229,25 +233,14 @@ def paresCruzados(l1,l2,x,dist):
             
 
 """
-PRUEBA DE LAS FUNCIONES
-"""
-datitos = listaDePuntos('datitos.txt')
-#print("Lista de Coordenadas \n",datos,"\n")
-#print("Distancia minima (Fuerza Bruta) \n", distanciaMinima(datos), "\n")
-#print("Ordenamiento por Upsort \n", upSort(datos),"\n")
-#print('Ordenamiento por MergeSort: \n ', mergeSort(datos),"\n")
-#print("Ordenamiento por Python: \n", datos.sort(),"\n")
-#print("Distancia minima: D&C (Python) \n",distanciaMinimaDyC(datos, "python"), "\n")
-#print("Distancia minima: D&C (mergeSort) \n",distanciaMinimaDyC(datos, "merge"), "\n")
-#print("Distancia minima: D&C (UpSort) \n",distanciaMinimaDyC(datos, "up"), "\n")
-
-"""
-PRUEBA CON DIFERENTES DATOS
+EXPERIMENTOS DE TIEMPO
 """
 def puntosAleatorios(a,b):
     """Genera una lista de longitud a con pares de números aleatorios entre
     -b y b"""
+    
     miSet = []
+    
     for i in range(a):
         if random.random() < 0.5:
             b = b*(-1)
@@ -257,52 +250,89 @@ def puntosAleatorios(a,b):
             
     return miSet
 
-#ParesDiez = puntosAleatorios(10,100)
-ParesCien = puntosAleatorios(100,1000)
-#ParesMil = puntosAleatorios(1000,10000)
-#ParesCincoMil = puntosAleatorios(5000,100000)
 
-
-def medir_tiempos(fn,*args):
-    """Mide los tiempos de ejecuciòn de la función fn"""
-    t0 = time.time()
-    fn(*args)
-    tf = time.time()
+def experimentarAlgoritmos():
+    """ Es una función que genera pares de datos y corre las funciones minimaDistancia(l) y
+    de minimaDistanciaDyC(l,algoritmo). Devuelve un .txt con los tiempos de ejecución de
+    ambas funciones para cada par de datos"""
     
-    return (tf-t0)
-  
+    #Genero un set de datos 
+    cant = [1000,5000,10000,15000,20000,50000]
     
+    #Guardo los tiempos registrados en una matriz de 4*6.
+    tiempos = np.zeros(shape = (4,6)) 
+    
+    #Hay un ciclo anidado para realizar el experimentos.
+    
+    for i in range(len(cant)): #repito para diferentes funciones                 
+        for j in range(tiempos.shape[1]):   #pruebo para las diferentes sets 
+            
+            datos = puntosAleatorios(cant[j],2500)
+            
+            if i == 0:
+                t0 = time.time()
+                distanciaMinima(datos)
+                t1 = time.time()
+                tiempos[i,j] = (t1 - t0)
+            elif i == 1:
+                t0 = time.time()
+                distanciaMinimaDyC(datos,"python")
+                t1 = time.time()
+                tiempos[i,j] = (t1 - t0)
+            if i == 2:
+                t0 = time.time()
+                distanciaMinimaDyC(datos,"up")
+                t1 = time.time()
+                tiempos[i,j] = (t1 - t0)
+            if i == 3:
+                t0 = time.time()
+                distanciaMinimaDyC(datos,"merge")
+                t1 = time.time()
+                tiempos[i,j] = (t1 - t0)
+    
+    return (np.savetxt("datosGrafico1.txt",tiempos)) #quiero guardar los datos en un txt
+
+res = experimentarAlgoritmos()
+                
 """
-TiemposFuerzaBruta = []
-
-TiemposFuerzaBruta.append(medir_tiempos(distanciaMinima,ParesDiez))
-TiemposFuerzaBruta.append(medir_tiempos(distanciaMinima,ParesCien))
-TiemposFuerzaBruta.append(medir_tiempos(distanciaMinima,ParesMil))
-TiemposFuerzaBruta.append(medir_tiempos(distanciaMinima,ParesCincoMil))
-
-print("Dist Min:",distanciaMinima(ParesCien))
-print(TiemposFuerzaBruta)
-
-
-TiemposDyCM = []
-
-TiemposDyCM.append(medir_tiempos(distanciaMinimaDyC,ParesDiez,"merge"))
-TiemposDyCM.append(medir_tiempos(distanciaMinimaDyC,ParesCien,"merge"))
-TiemposDyCM.append(medir_tiempos(distanciaMinimaDyC,ParesMil,"merge"))
-TiemposDyCM.append(medir_tiempos(distanciaMinimaDyC,ParesCincoMil,"merge"))
-
-print("Dist Min:", distanciaMinima(ParesCien))
-print(TiemposDyCM)
-
-TiemposDyCU = []
-
-TiemposDyCU.append(medir_tiempos(distanciaMinimaDyC,ParesDiez,"up"))
-TiemposDyCU.append(medir_tiempos(distanciaMinimaDyC,ParesCien,"up"))
-TiemposDyCU.append(medir_tiempos(distanciaMinimaDyC,ParesMil,"up"))
-TiemposDyCU.append(medir_tiempos(distanciaMinimaDyC,ParesCincoMil,"up"))
-
-print("Dist Min:", distanciaMinima(ParesCien))
-print(TiemposDyCU)
+GRÁFICOS
 """
+
+datos = listaDePuntos("datosGrafico1.txt") 
+x = [1000,5000,10000,15000,20000, 50000] #Eje x, cantidad de datos
+y_fb = datos[0] #Eje y, para tiempos de fuerza bruta
+y_python = datos[1] #Eje y, para tiempos de DyC ordenando por python
+y_upsort = datos[2] #Eje y, para tiempos de DyC ordenados por upSort
+y_merge = datos[3] #Eje y, para tiempos de DyC ordenados por merge
+
+figura = plt.figure()
+plt.title("Tiempos de ejecución para algoritmos \n de diferente complejidad", fontweight = "bold")
+plt.xlabel("Cantidad de puntos")
+plt.ylabel("Tiempos de Ejecución (s)")
+#plt.xscale("log")
+plt.plot(x,y_fb, label = "Fuerza Bruta", color = "black", linewidth = 2.0, linestyle="-", marker = "o")
+plt.plot(x,y_python, label = "DyC: Python", color = "green", linewidth = 3.0, linestyle="-", marker = "s")
+plt.plot(x,y_upsort, label = "DyC: Upsort", color = "red", linewidth = 2.0, linestyle="-", marker = "x")
+plt.plot(x,y_merge, label = "DyC: Merge", color = "blue", linewidth = 1.5, linestyle="--", marker = "*")
+plt.legend(loc = "best")
+plt.savefig("GraficosEj1.png")
+plt.show()
+
+
+
+"""
+PRUEBA DE LAS FUNCIONES
+
+datitos = listaDePuntos('datitos.txt')
+print("Lista de Coordenadas \n",datitos,"\n")
+print("Distancia minima (Fuerza Bruta) \n", distanciaMinima(datitos), "\n")
+print("Ordenamiento por Upsort \n", upSort(datitos),"\n")
+print('Ordenamiento por MergeSort: \n ', mergeSort(datitos),"\n")
+print("Ordenamiento por Python: \n", datitos.sort(),"\n")
+print("Distancia minima: D&C (Python) \n",distanciaMinimaDyC(datitos, "python"), "\n")
+print("Distancia minima: D&C (mergeSort) \n",distanciaMinimaDyC(datitos, "merge"), "\n")
+print("Distancia minima: D&C (UpSort) \n",distanciaMinimaDyC(datitos, "up"), "\n")    
+"""
+
 
 

@@ -36,6 +36,11 @@ Como se observa en la Figura 1, a medida que crece el número de datos a calcula
 
 \section{Ejercicio 2: Python y Numba}
 
+Dentro de la carpeta \textbf{src\_2} ubicada en el repositorio, se encuentran los archivos correspondientes del ejercicio 2. El archivo \textit{ej2.py} contiene la implementación de las funciones, mientras que el archivo \textit{ej2\_graf.py} contiene la implementación de los gráficos obtenidos. \par 
+El código \textit{ej2.py} esta implementado para correrse por consola.
+contiene a las funciones \texttt{gray\_filer(img)} y \texttt{blur\_filter(img)}. Además, se implementó la función \texttt{medirTiempos(fn,*args)}, la cual mide el tiempo de ejecución de los filtros, y la función \texttt{getfilenames(path)}, que devuelve una lista con las rutas de los archivos del tipo requerido. Para correr la función por consola, se necesitan 5 argumentos: la ruta de la imagen junto con su extensión, el número de threads que se quieren correr, el número de repeticiones y el nombre del archivo de salida... (completar).
+
+Las figuras 2 y 3 contienen los resultados de escalabilidad para los filtros gray y blur. Cada figura contiene ocho gráficos. Cada gráfico representa el tiempo de ejecución del filtro para una determinada resolución de la imagen utilizada (las imágenes se encuentra en el repositorio, en la ruta \textit{src\_2/im}). Para el caso de la figura 2, puede observarse que al aplicar  
 
 
 

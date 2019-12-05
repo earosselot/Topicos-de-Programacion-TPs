@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+
+# Topicos de Programacion 2019 - Trabajo Practico - Ejercicio 2 
+# Grupo 1
+# Perez Frasette, Maximiliano - Rosselot, Eduardo Agustin
+
 import sys
 import os
 import imageio
@@ -16,7 +22,7 @@ def medirTiempos(fn, *args):
     return t1 - t0
 
 
-# @jit(parallel=True)
+#@jit(parallel=True)
 def gray_filter(img):
     """filtro que hace una transformacion de una imagen color a una en escala de grises con ciertos valores"""
 
@@ -30,7 +36,7 @@ def gray_filter(img):
     return gray
 
 
-# @jit(parallel=True)
+#@jit(parallel=True)
 def blur_filter(img):
     """Filtro que recibe una imagen matriz en grises y devuelve una matriz difuminada"""
 
@@ -42,15 +48,16 @@ def blur_filter(img):
     # los dos for anidados recorren toda la imagen excepto lo bordes
     for i in range(1, filas - 1):
         for j in range(1, col - 1):
-            # este calculo ganera e l valor promedio que requiere el blur
+            # este calculo genera el valor promedio que requiere el blur
             res[i, j] = (img[i - 1, j] + img[i + 1, j] + img[i, j - 1] + img[i, j + 1]) / 4
+    
     # img_uint8 = res.astype(np.uint8)
     # imageio.imwrite('out_jit.jpg', img_uint8)
     return res
 
 
 def getfilenames(path):
-    """funcion que devuelve una lista con las rutas de los archivos del tipo requerido y su path local
+    """funcion que devuelve una lista con las rutas de los archivos del tipo requerido y su path local.
     formato path (str): 'path/al/archivo/*.tipo' """
 
     ftype = path.split(".")[-1]

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.3)  5 DEC 2019 12:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.3)  5 DEC 2019 17:08
 entering extended mode
 **./Informe_Rosselot_PerezFrasette.tex
 (Informe_Rosselot_PerezFrasette.tex
@@ -230,19 +230,19 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 <GraficosEj1.png, id=16, 433.62pt x 289.08pt>
 File: GraficosEj1.png Graphic file (type png)
 <use GraficosEj1.png>
-Package pdftex.def Info: GraficosEj1.png  used on input line 48.
+Package pdftex.def Info: GraficosEj1.png  used on input line 55.
 (pdftex.def)             Requested size: 312.00119pt x 208.0095pt.
 <GráficosGray.png, id=18, 722.7pt x 722.7pt>
 File: GráficosGray.png Graphic file (type png)
 <use GráficosGray.png>
-Package pdftex.def Info: GráficosGray.png  used on input line 56.
+Package pdftex.def Info: GráficosGray.png  used on input line 63.
 (pdftex.def)             Requested size: 312.00119pt x 312.00104pt.
 <GráficosBlur.png, id=19, 722.7pt x 722.7pt>
 File: GráficosBlur.png Graphic file (type png)
 <use GráficosBlur.png>
-Package pdftex.def Info: GráficosBlur.png  used on input line 64.
+Package pdftex.def Info: GráficosBlur.png  used on input line 71.
 (pdftex.def)             Requested size: 312.00119pt x 312.00104pt.
- [3 <./GraficosEj1.png>] [4 <./GráficosGray.png>] [5 <./GráficosBlur.png>] (I
+ [3] [4 <./GraficosEj1.png> <./GráficosGray.png>] [5 <./GráficosBlur.png>] (I
 nforme_Rosselot_PerezFrasette.aux
 LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
@@ -252,11 +252,11 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2620 strings out of 492484
- 38418 string characters out of 3120695
+ 2621 strings out of 492484
+ 38399 string characters out of 3120695
  117651 words of memory out of 3000000
- 6944 multiletter control sequences out of 15000+200000
- 9626 words of font info for 34 fonts, out of 3000000 for 9000
+ 6945 multiletter control sequences out of 15000+200000
+ 9933 words of font info for 35 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,8n,35p,2807b,361s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/Liliana/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
@@ -270,7 +270,7 @@ mr8.pfb><C:/Users/Liliana/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
 amsfonts/cm/cmsy10.pfb><C:/Users/Liliana/AppData/Local/Programs/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/Liliana/AppData/Local/Programs/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Informe_Rosselot_PerezFrasette.pdf (5 pages, 232370 bytes).
+Output written on Informe_Rosselot_PerezFrasette.pdf (5 pages, 233877 bytes).
 PDF statistics:
  61 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

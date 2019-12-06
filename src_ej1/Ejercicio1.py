@@ -292,7 +292,7 @@ def experimentarAlgoritmos():
     
     return (np.savetxt("datosGrafico1.txt",tiempos)) #quiero guardar los datos en un txt
 
-res = experimentarAlgoritmos()
+#res = experimentarAlgoritmos()
                 
 """
 GRÁFICOS

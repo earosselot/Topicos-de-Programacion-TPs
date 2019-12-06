@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.3)  5 DEC 2019 23:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.12.3)  6 DEC 2019 12:10
 entering extended mode
 **./Informe_Rosselot_PerezFrasette.tex
 (Informe_Rosselot_PerezFrasette.tex
@@ -350,38 +350,78 @@ Package: l3keys2e 2019-10-11 LaTeX2e option processing using LaTeX3 keys
 ("C:\Users\Liliana\AppData\Local\Programs\MiKTeX 2.9\tex/latex/translator\trans
 lator.sty"
 Package: translator 2019-05-31 v1.12a Easy translation of strings in LaTeX
-)) (Informe_Rosselot_PerezFrasette.aux)
+))
+("C:\Users\Liliana\AppData\Local\Programs\MiKTeX 2.9\tex/latex/float\float.sty"
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count266
+\float@exts=\toks20
+\float@box=\box55
+\@float@everytoks=\toks21
+\@floatcapt=\box56
+)
+("C:\Users\Liliana\AppData\Local\Programs\MiKTeX 2.9\tex/latex/slashbox\slashbo
+x.sty"
+slashbox style by K.Yasuoka, May 1993.
+\@slashboxa=\box57
+\@slashboxb=\box58
+\@slashboxc=\box59
+\@slashboxwd=\count267
+\@slashboxht=\count268
+\@slashsepl=\dimen153
+\@slashsepr=\dimen154
+)
+("C:\Users\Liliana\AppData\Local\Programs\MiKTeX 2.9\tex/latex/multirow\multiro
+w.sty"
+Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
+\multirow@colwidth=\skip58
+\multirow@cntb=\count269
+\multirow@dima=\skip59
+\bigstrutjot=\dimen155
+) (Informe_Rosselot_PerezFrasette.aux
+LaTeX Info: Redefining \. on input line 7.
+LaTeX Info: Redefining \% on input line 7.
+
+
+LaTeX Warning: Label `tab:coches' multiply defined.
+
+
+LaTeX Warning: Label `fig:ejemplo' multiply defined.
+
+
+LaTeX Warning: Label `fig:ejemplo' multiply defined.
+
+)
 \openout1 = `Informe_Rosselot_PerezFrasette.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Info: Redefining \. on input line 10.
-LaTeX Info: Redefining \% on input line 10.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Info: Redefining \. on input line 11.
+LaTeX Info: Redefining \% on input line 11.
 
 ("C:\Users\Liliana\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii\supp
 -pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count266
-\scratchdimen=\dimen153
-\scratchbox=\box55
-\nofMPsegments=\count267
-\nofMParguments=\count268
-\everyMPshowfont=\toks20
-\MPscratchCnt=\count269
-\MPscratchDim=\dimen154
-\MPnumerator=\count270
-\makeMPintoPDFobject=\count271
-\everyMPtoPDFconversion=\toks21
+\scratchcounter=\count270
+\scratchdimen=\dimen156
+\scratchbox=\box60
+\nofMPsegments=\count271
+\nofMParguments=\count272
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count273
+\MPscratchDim=\dimen157
+\MPnumerator=\count274
+\makeMPintoPDFobject=\count275
+\everyMPtoPDFconversion=\toks23
 )
 ("C:\Users\Liliana\AppData\Local\Programs\MiKTeX 2.9\tex/latex/epstopdf-pkg\eps
 topdf-base.sty"
@@ -525,69 +565,74 @@ abbreviations.cfg"
 File: siunitx-abbreviations.cfg 2017/11/26 v2.7k siunitx: Abbreviated units
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 10.
+(Font)              <12> on input line 11.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 10.
+(Font)              <8> on input line 11.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 10.
+(Font)              <6> on input line 11.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 23.
+(Font)              <14.4> on input line 24.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 23.
+(Font)              <7> on input line 24.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 23.
+(Font)              <10.95> on input line 24.
 
-Overfull \hbox (37.07433pt too wide) in paragraph at lines 23--23
+Overfull \hbox (37.07433pt too wide) in paragraph at lines 24--24
  [] 
- []
-
-
-Overfull \hbox (4.08699pt too wide) in paragraph at lines 32--32
-\OT1/cmr/m/n/12 eucldea en-tre dos pa-res de coor-de-na-das. Por ulti-mo, \O
-T1/cmtt/m/n/12 distanciaMinimaDyC(l,
  []
 
 [1
 
 {C:/Users/Liliana/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-[2]
-Overfull \hbox (84.97389pt too wide) in paragraph at lines 40--49
+[1]
+<GraficosEj1.png, id=16, 433.62pt x 289.08pt>
+File: GraficosEj1.png Graphic file (type png)
+<use GraficosEj1.png>
+Package pdftex.def Info: GraficosEj1.png  used on input line 40.
+(pdftex.def)             Requested size: 312.00119pt x 208.0095pt.
+ [2 <./GraficosEj1.png>]
+Overfull \hbox (97.98701pt too wide) in paragraph at lines 50--59
  [] 
  []
 
 [3]
-<GraficosEj1.png, id=21, 433.62pt x 289.08pt>
-File: GraficosEj1.png Graphic file (type png)
-<use GraficosEj1.png>
-Package pdftex.def Info: GraficosEj1.png  used on input line 72.
-(pdftex.def)             Requested size: 312.00119pt x 208.0095pt.
-<GráficosGray.png, id=23, 722.7pt x 722.7pt>
+Overfull \hbox (4.4924pt too wide) in paragraph at lines 75--84
+ [] 
+ []
+
+<GráficosGray.png, id=27, 722.7pt x 722.7pt>
 File: GráficosGray.png Graphic file (type png)
 <use GráficosGray.png>
-Package pdftex.def Info: GráficosGray.png  used on input line 80.
-(pdftex.def)             Requested size: 312.00119pt x 312.00104pt.
-<GráficosBlur.png, id=24, 722.7pt x 722.7pt>
+Package pdftex.def Info: GráficosGray.png  used on input line 93.
+(pdftex.def)             Requested size: 350.99762pt x 350.99428pt.
+[4]
+<GráficosBlur.png, id=32, 722.7pt x 722.7pt>
 File: GráficosBlur.png Graphic file (type png)
 <use GráficosBlur.png>
-Package pdftex.def Info: GráficosBlur.png  used on input line 88.
-(pdftex.def)             Requested size: 312.00119pt x 312.00104pt.
- [4 <./GraficosEj1.png>] [5 <./GráficosGray.png>] [6 <./GráficosBlur.png>] (I
-nforme_Rosselot_PerezFrasette.aux
+Package pdftex.def Info: GráficosBlur.png  used on input line 101.
+(pdftex.def)             Requested size: 350.99762pt x 350.99428pt.
+ [5 <./GráficosGray.png>]
+Overfull \hbox (11.74557pt too wide) in paragraph at lines 110--110
+\OT1/cmr/m/n/12 ([]\OT1/cmtt/m/n/12 not[]lista(self, l1), []and[]listas(self, l
+1, l2), []todo[]False(self,
+ []
+
+[6 <./GráficosBlur.png>] [7] (Informe_Rosselot_PerezFrasette.aux
 LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
 )
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 15190 strings out of 492484
- 306886 string characters out of 3120695
- 343380 words of memory out of 3000000
- 19457 multiletter control sequences out of 15000+200000
+ 15330 strings out of 492484
+ 309130 string characters out of 3120695
+ 343947 words of memory out of 3000000
+ 19585 multiletter control sequences out of 15000+200000
  541764 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,11n,67p,2805b,517s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,13n,67p,2842b,523s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/Liliana/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
 ts/cm/cmbx12.pfb><C:/Users/Liliana/AppData/Local/Programs/MiKTeX 2.9/fonts/type
 1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Liliana/AppData/Local/Programs/MiKTeX
@@ -599,10 +644,12 @@ mr8.pfb><C:/Users/Liliana/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
 amsfonts/cm/cmsy10.pfb><C:/Users/Liliana/AppData/Local/Programs/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/Liliana/AppData/Local/Programs/M
 iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/Liliana/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Informe_Rosselot_PerezFrasette.pdf (6 pages, 245973 bytes).
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Users/Li
+liana/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/latxfont/li
+ne10.pfb>
+Output written on Informe_Rosselot_PerezFrasette.pdf (8 pages, 254294 bytes).
 PDF statistics:
- 68 PDF objects out of 1000 (max. 8388607)
+ 80 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
